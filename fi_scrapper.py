@@ -30,9 +30,9 @@ def write_to_file(filename: str, content):
 raw_content = scrape_fi_page()
 
 agent = AIAgent()
-data = agent.parse_html(raw_content)
+chunks = agent.parse_html(raw_content)
 
-write_to_file("chunks.md", data)
+write_to_file("chunks.md", chunks)
 
 #print("Done!")
 
