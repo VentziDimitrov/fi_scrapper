@@ -4,6 +4,7 @@ Scrapping FI Bank webpage
 # How to use
 1. Install dependencies
    - pip install load-dotenv
+   - pip install tiktoken
    - pip install playwright
      playwright installation: https://playwright.dev/python/docs/library
 
