@@ -60,10 +60,12 @@ def write_to_file(filename: str, content):
 raw_content = scrape_fi_page()
 
 agent = AIAgent()
-data = agent.parse_html(raw_content)
+
+""" Returns structured json which is optimal option for vector db injection """
+chunks = agent.parse_html(raw_content)
 
 dbManager = VectorDBManager()
-items = dbManager.check_chunk_size(data, max_tokens=500)
+items = dbManager.check_chunk_size(chunks, max_tokens=500)
 
 write_to_file("chunks.md", json.dumps(items, indent=2, ensure_ascii=False))
 
