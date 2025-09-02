@@ -25,11 +25,6 @@ OUTPUT_DIR = "fibank_chunks"
 
     Returns:
         str: The HTML content contained within the ".accounts-list" element.
-
-    Raises:
-        playwright.sync_api.TimeoutError:
-            If the selector ".accounts-list" does not appear within the default timeout window.
-
 """
 
 def scrape_fi_page():
