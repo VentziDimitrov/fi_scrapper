@@ -9,6 +9,29 @@ BASE_URL = "https://www.fibank.bg/bg/chastni-lica/karti"
 OUTPUT_DIR = "fibank_chunks"
 # ============================
 
+"""
+    Launches a headless Chromium browser, navigates to BASE_URL, and returns the inner HTML
+    of an element matching the CSS selector ".accounts-list".
+
+    Steps performed:
+    1. Uses a context manager (`with sync_playwright() as p:`) to start and cleanly close Playwright,
+       following recommended usage patterns :contentReference[oaicite:1]{index=1}.
+    2. Launches a Chromium browser instance.
+    3. Opens a new page and navigates to the global `BASE_URL`.
+    4. Waits for the element `.accounts-list` to appear in the DOM.
+    5. Locates the element and captures its inner HTML.
+    6. Closes the browser.
+    7. Returns the raw HTML string for further processing.
+
+    Returns:
+        str: The HTML content contained within the ".accounts-list" element.
+
+    Raises:
+        playwright.sync_api.TimeoutError:
+            If the selector ".accounts-list" does not appear within the default timeout window.
+
+"""
+
 def scrape_fi_page():
     with sync_playwright() as p:
         browser = p.chromium.launch()
@@ -19,7 +42,18 @@ def scrape_fi_page():
         html_raw = locator.inner_html()
         browser.close()
         return html_raw
-    
+
+
+"""
+    Writes the provided content to a file in the OUTPUT_DIR directory.
+
+    Args:
+        filename (str): Name of the file to write to.
+        content: The content to write (usually a string).
+
+    The function ensures OUTPUT_DIR exists, then writes the content
+    to the specified file using UTF-8 encoding.
+"""
 def write_to_file(filename: str, content):
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
