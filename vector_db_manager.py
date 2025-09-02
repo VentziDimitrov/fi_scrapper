@@ -14,7 +14,7 @@ class VectorDBManager:
     def check_chunk_size(self, items: str, max_tokens=500):
         """
         Check if item text exceeds max_tokens and mark it.
-        Adds property: 'exceed_chunk_size': bool
+        Adds property on each item: 'exceed_chunk_size': bool
         """
         parsed_items = json.loads(items)
         for item in parsed_items:
@@ -34,7 +34,9 @@ class VectorDBManager:
         return response.data[0].embedding
 
     def embed_items(self, items: list):
-        """Embed a list of JSON items """
+        """Embed a list of JSON items. 
+        Returns a list of embeddings with metadata ready to insert into vector db.
+        """
         results = []
         for item in items:
             text_to_embed = f"Title: {item['title']}\nDescription: {item['description']}\nURL: {item['url']}"
