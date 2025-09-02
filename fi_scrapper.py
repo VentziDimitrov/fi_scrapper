@@ -1,4 +1,5 @@
 import os
+import json
 from playwright.sync_api import sync_playwright
 from ai_agent import AIAgent
 from vector_db_manager import VectorDBManager
@@ -30,12 +31,15 @@ def write_to_file(filename: str, content):
 raw_content = scrape_fi_page()
 
 agent = AIAgent()
-chunks = agent.parse_html(raw_content)
+data = agent.parse_html(raw_content)
 
-write_to_file("chunks.md", chunks)
+dbManager = VectorDBManager()
+items = dbManager.check_chunk_size(data, max_tokens=500)
+
+write_to_file("chunks.md", json.dumps(items, indent=2, ensure_ascii=False))
 
 #print("Done!")
 
 """ #Prepare for inserting into vector DB
-dbManager = VectorDBManager()
-dbManager.embed_items(data) """
+dbManager.embed_items(data) 
+"""
