@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 # ========== CONFIG ==========
 MODEL = "gpt-4o-mini"  
@@ -95,10 +95,14 @@ Here the code: {html}
             temperature=0
         )
         
+        def strip_code_fences(text: str) -> str:
+            return text.replace("```json", "").replace("```", "").strip()
+        
         #print("AI JSON Output:", json_output)
         try:
             json_output = response.choices[0].message.content.strip()
-            return json_output
+            stripped =  strip_code_fences(json_output)
+            return stripped
         except Exception:
             raise ValueError(f"Failed to parse AI output as JSON")
         
