@@ -7,6 +7,7 @@ load_dotenv(override=True)
 # ========== CONFIG ==========
 MODEL = "gpt-4o-mini"  
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# ============================
 
 class AIAgent:
     def __init__(self):
@@ -14,6 +15,14 @@ class AIAgent:
         self.model = MODEL
         
     def parse_html(self, html: str) -> dict:
+        """
+            Parses the provided HTML content and returns structured data using an AI model.
+
+            Args:
+                html (str): HTML content.
+        """
+        
+        
         prompt = f""" 
 You are an expert HTML parsing agent specialized in extracting structured data from HTML content. Your task is to parse HTML code containing product/service listings and extract specific information from each list item.
 
